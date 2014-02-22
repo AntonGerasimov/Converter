@@ -101,7 +101,7 @@ void outputvideo()
 		int white;
 		im = gdImageCreate(200,200);
         	white = gdImageColorAllocate(im, 250, 250, 250);
-       		for (k=1;k<=number_ -1;k=k+5) //круги создаются с шагом 10, чтобы сократить время работы программы и увеличить качество визуализации (радиусы кругов не будут слишком близкими)
+       		for (k=1;k<=number_ -1;k=k+10) //круги создаются с шагом 10, чтобы сократить время работы программы и увеличить качество визуализации (радиусы кругов не будут слишком близкими)
 			{		
 			float R = out_data[2][k] * q;
 			circle(im, R, out_data[1][k]);
@@ -109,33 +109,24 @@ void outputvideo()
 	
 		char s[]="picture0000.gif";
 		
-		int z=i;
-		int dj;
-		char vj; //вспомогательные переменные, для формирования имени картинки
+		int z, num=i, figure;
+		for (z=0;z<=3;z++)
+			{
+			figure = num % 10;
+			s[10-z] = figure + '0';
+			num = num / 10;
+			}		
 
-		dj=z % 10;//картинке передается имя, включающее ее номер
-		vj = (char)dj + '0';
-		s[10] = vj;
-			
-		z = z / 10;
-		dj=z % 10;
-		s[9]=(char)dj + 48;
-			
-		z = z /10;
-		dj=z % 10;
-		s[8]=(char)dj + 48;
-			
-		z = z / 10;
-		dj=z%10;
-		s[7]=(char)dj + 48;
-					
+
+
+
 	
 		out = fopen(s, "wb");
         	gdImageGif (im, out);
       		fclose(out);
         	gdImageDestroy(im);
 		int proc;
-		if (i%10==0)
+		if (i%50==0)
 			{
 			proc = i/10;
 			printf("Video completed %d percent \n", proc); 
